@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Chat App</title>
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+
+  <style>
+
+.advert-column {
+      width: 200px; /* Adjust width as needed */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .left {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      background-color: #f9f9f9; /* Adjust as needed */
+    }
+
+    .right {
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: #f9f9f9; /* Adjust as needed */
+    }
+
+    .advert {
+      margin-bottom: 20px;
+      /* Additional styles for your advert content (images, text, etc.) */
+    }
+
+    /* Main content styles... */
+    .main-content {
+      margin: 0 220px; /* Adjust margins to accommodate advert columns */
+    }
+
+
+#logoText {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-family: 'Arial', sans-serif; /* Replace with your desired font */
+      font-size: 24px;
+      font-weight: bold;
+      color: #333; /* Change the color as needed */
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Additional CSS for the DMI INIFATE Chat text */
+    #headerText {
+      position: absolute;
+      top: 20px;
+      left: 70px;
+      font-family: 'Arial', sans-serif; /* Replace with your desired font */
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    #usernameForm {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    #usernameInput {
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      width: 200px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 20px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #chatArea {
+      display: none;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      border-radius: 8px;
+      margin-bottom: 8px;
+      word-wrap: break-word;
+      padding: 10px;
+      background-color: #f2f2f2;
+      line-height: 1.4;
+    }
+
+    li:nth-child(odd) {
+      background-color: #e5e5e5;
+    }
+
+    #form {
+      display: flex;
+      margin-top: 15px;
+    }
+
+    #input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-right: 10px;
+      outline: none;
+    }
+
+    button[type="submit"] {
+      padding: 12px 20px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    #signOutBtn {
+      padding: 8px 12px;
+      border: none;
+      cursor: pointer;
+      background-color: #f44336;
+      color: white;
+      font-size: 14px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+  </style>
+</head>
+<body>
+
+  
+  <div class="main-content">
+    <div id="logoText">Group Chat App</div>
+  <div id="usernameForm">
+    <input id="usernameInput" placeholder="Enter your username" autocomplete="off" />
+    <button onclick="setUsername()">Set Username</button>
+  </div>
+
+
+  
+  <div id="chatArea" style="display: none;">
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+    <button id="signOutBtn">Sign Out</button>
+  </div>
+</div>
+
+
+<script>
+  const icons = [
+    '🙂', '😎', '😊', '🥳', '😇', '🤠', '👽', '🐻', '🐶', '🐱', '🦄', '🐙', '🌟', '🍕', '🎩'
+    // Add more icons as needed
+  ];
+
+  let userIcon;
+  const socket = io();
+
+  // function setUsername() {
+  //   const username = $('#usernameInput').val();
+  //   if (username.trim() !== '') {
+  //     // Assign a random icon to the user
+  //     userIcon = icons[Math.floor(Math.random() * icons.length)];
+
+  //     // Emit username and icon to the server
+  //     socket.emit('setUsername', { username, icon: userIcon });
+  //     $('#usernameForm').hide();
+  //     $('#chatArea').show();
+  //   }
+  // }
+  function setUsername() {
+  const username = $('#usernameInput').val();
+  if (username.trim() !== '') {
+    userIcon = icons[Math.floor(Math.random() * icons.length)];
+    socket.emit('setUsername', { username, icon: userIcon });
+
+    // Save the username to localStorage
+    localStorage.setItem('chatUsername', username);
+    localStorage.setItem('hasSetUsername', 'true');
+
+    $('#usernameForm').hide();
+    $('#chatArea').show();
+  }
+}
+function signOut() {
+      // Clear the stored username and indication of setting the username
+      localStorage.removeItem('chatUsername');
+      localStorage.removeItem('hasSetUsername');
+
+      // Disconnect the socket connection when signing out
+      socket.disconnect();
+
+      // Show the username input form and hide the chat area
+      $('#usernameForm').show();
+      $('#chatArea').hide();
+    }
+
+
+// When the page loads, check if the username is stored in localStorage and show the chat area if the user has set the username
+$(document).ready(function() {
+  const hasSetUsername = localStorage.getItem('hasSetUsername');
+  if (hasSetUsername === 'true') {
+    const storedUsername = localStorage.getItem('chatUsername');
+    $('#usernameForm').hide();
+    $('#chatArea').show();
+    $('#usernameInput').val(storedUsername);
+    setUsername(); // Call the setUsername function to set the username without re-entering
+  }
+});
+
+$('#signOutBtn').click(function() {
+  signOut();
+});
+
+  function addMessageToChat(data) {
+    // Modify the line below to display the icon along with the message
+    $('#messages').append($('<li>').html(`<span style="font-size: 20px;">${data.icon}</span> ${data.username}: ${data.message}`));
+  }
+
+  // Function to handle chat history when received
+  socket.on('chat history', (history) => {
+    history.forEach((message) => {
+      addMessageToChat(message);
+    });
+  });
+
+  $('form').submit(function() {
+    const msg = $('#input').val();
+    socket.emit('chat message', msg);
+    $('#input').val('');
+    return false;
+  });
+
+  socket.on('chat message', (data) => {
+    addMessageToChat(data);
+  });
+
+  socket.on('userJoined', (msg) => {
+    $('#messages').append($('<li>').text(`- ${msg}`));
+  });
+
+  socket.on('userLeft', (msg) => {
+    $('#messages').append($('<li>').text(`- ${msg}`));
+  });
+</script>
+</body>
+</html>
