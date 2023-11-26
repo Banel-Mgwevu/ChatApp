@@ -68,13 +68,13 @@ Contributions are welcome! Please feel free to fork the repository and submit pu
 ## Screenshots 🖼️
 
 <p align="center">
-  <img src="Screenshot1.png" alt="Screenshot 1" width="400">
+  <img src="PIC2.png" alt="Screenshot 1" width="400">
   <br>
   <em>Short description or caption for Screenshot 1</em>
 </p>
 
 <p align="center">
-  <img src="Screenshot2.png" alt="Screenshot 2" width="400">
+  <img src="PIC1.png" alt="Screenshot 2" width="400">
   <br>
   <em>Short description or caption for Screenshot 2</em>
 </p>
