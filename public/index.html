@@ -9,171 +9,169 @@
 
   <style>
 
-.advert-column {
-      width: 200px; /* Adjust width as needed */
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 20px;
-    }
+/* Common styles */
 
-    .left {
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      background-color: #f9f9f9; /* Adjust as needed */
-    }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
 
-    .right {
-      position: fixed;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      background-color: #f9f9f9; /* Adjust as needed */
-    }
-
-    .advert {
-      margin-bottom: 20px;
-      /* Additional styles for your advert content (images, text, etc.) */
-    }
-
-    /* Main content styles... */
-    .main-content {
-      margin: 0 220px; /* Adjust margins to accommodate advert columns */
-    }
-
+/* Header styles */
 
 #logoText {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      font-family: 'Arial', sans-serif; /* Replace with your desired font */
-      font-size: 24px;
-      font-weight: bold;
-      color: #333; /* Change the color as needed */
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
 
-    /* Additional CSS for the DMI INIFATE Chat text */
-    #headerText {
-      position: absolute;
-      top: 20px;
-      left: 70px;
-      font-family: 'Arial', sans-serif; /* Replace with your desired font */
-      font-size: 18px;
-      font-weight: bold;
-    }
+/* Chat area styles */
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-    }
+#usernameForm {
+  text-align: center;
+  margin-top: 100px;
+}
 
-    #usernameForm {
-      text-align: center;
-      margin-top: 100px;
-    }
+#usernameInput {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 200px;
+  margin-bottom: 10px;
+  outline: none;
+}
 
-    #usernameInput {
-      padding: 12px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      width: 200px;
-      margin-bottom: 10px;
-      outline: none;
-    }
+button {
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
 
-    button {
-      padding: 12px 20px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
+button:hover {
+  background-color: #45a049;
+}
 
-    button:hover {
-      background-color: #45a049;
-    }
+#chatArea {
+  display: none;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+}
 
-    #chatArea {
-      display: none;
-      max-width: 800px;
-      margin: 20px auto;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      padding: 20px;
-    }
+/* Message list styles */
 
-    ul {
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
-    }
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
 
-    li {
-      border-radius: 8px;
-      margin-bottom: 8px;
-      word-wrap: break-word;
-      padding: 10px;
-      background-color: #f2f2f2;
-      line-height: 1.4;
-    }
+li {
+  border-radius: 8px;
+  margin-bottom: 8px;
+  word-wrap: break-word;
+  padding: 10px;
+  background-color: #f2f2f2;
+  line-height: 1.4;
+}
 
-    li:nth-child(odd) {
-      background-color: #e5e5e5;
-    }
+li:nth-child(odd) {
+  background-color: #e5e5e5;
+}
 
-    #form {
-      display: flex;
-      margin-top: 15px;
-    }
+#form {
+  display: flex;
+  margin-top: 15px;
+}
 
-    #input {
-      flex: 1;
-      padding: 12px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      margin-right: 10px;
-      outline: none;
-    }
+#input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-right: 10px;
+  outline: none;
+}
 
-    button[type="submit"] {
-      padding: 12px 20px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
+button[type="submit"] {
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
 
-    button[type="submit"]:hover {
-      background-color: #45a049;
-    }
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
 
-    #signOutBtn {
-      padding: 8px 12px;
-      border: none;
-      cursor: pointer;
-      background-color: #f44336;
-      color: white;
-      font-size: 14px;
-      position: absolute;
-      top: 10px;
-      right: 10px;
-    }
+#signOutBtn {
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  background-color: #f44336;
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+/* Responsive styles */
+
+@media only screen and (max-width: 768px) {
+  /* Adjustments for smaller screens */
+
+  #logoText {
+    font-size: 20px;
+  }
+
+  #usernameInput {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  #chatArea {
+    padding: 15px;
+  }
+
+  li {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  #input {
+    font-size: 14px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+
+  #signOutBtn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
 
   </style>
 </head>
